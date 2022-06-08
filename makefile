@@ -47,15 +47,15 @@ NO_COLOR	=	\033[0m
 
 # ------------------------------ Messages ------------------------------
 
-COMP_START	=	echo "\n🚧 $(BOLD_YELLOW)Make: $(NO_COLOR)Starting the compilation...\n"
+COMP_START	=	echo "\n🚧 $(BOLD_YELLOW)Make: $(NO_COLOR)Derleme baslatildi...\n"
 
-SERV_READY	=	echo "\n📥 Server ready!\n"
+SERV_READY	=	echo "\n📥 Server hazir!\n"
 
-CLI_READY	=	echo "\n📟 Client ready!\n"
+CLI_READY	=	echo "\n📟 Client hazir!\n"
 
-CLEANED		=	echo "\n💧 $(BOLD_YELLOW)Clean: $(NO_COLOR)Removed all the \".o\" files \n"
+CLEANED		=	echo "\n💧 $(BOLD_YELLOW)Clean: $(NO_COLOR)Tum \".o\" dosyalari silindi. \n"
 
-FCLEANED	=	echo "\n🧼 $(BOLD_YELLOW)Fclean: $(NO_COLOR)Removed the executables \n"
+FCLEANED	=	echo "\n🧼 $(BOLD_YELLOW)Fclean: $(NO_COLOR)Silindi bitti \n"
 
 # ------------------------------ Rules ------------------------------
 

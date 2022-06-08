@@ -3,29 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_server.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayalman <ayalman@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ardayalman <ardayalman@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 12:32:23 by ardayalman        #+#    #+#             */
-/*   Updated: 2022/06/08 15:50:24 by ayalman          ###   ########.fr       */
+/*   Updated: 2022/06/08 22:52:28 by ardayalman       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-static void	reset(char *str)
+static void reset(char *str)
 {
-	int	j;
+	int j;
 
 	j = 0;
 	while (j < 8)
 		str[j++] = '\0';
 }
 
-void	write_char(int *res, char *bin)
+void write_char(int *res, char *bin)
 {
-	int		two;
-	char	chr;
-	int		index;
+	int two;
+	char chr;
+	int index;
 
 	two = 1;
 	chr = 0;
@@ -41,11 +41,12 @@ void	write_char(int *res, char *bin)
 	reset(bin);
 }
 
-static void	handle(int sig)
+static void handle(int sig, siginfo_t *siginfo, void *bos)
 {
-	static int	i;
-	static char	bin[8];
+	static int i;
+	static char bin[8];
 
+	(void)bos;
 	if (!i)
 		i = 1;
 	if (sig == SIGUSR1)
@@ -59,15 +60,18 @@ static void	handle(int sig)
 		i++;
 	}
 	if (i == 9)
+	{
 		write_char(&i, bin);
+		kill(siginfo->si_pid, SIGUSR2);
+	}
 }
 
-int	main(void)
+int main(void)
 {
-	char				*a;
-	struct sigaction	sa;
+	char *a;
+	struct sigaction sa;
 
-	sa.sa_handler = &handle;
+	sa.sa_sigaction = &handle;
 	sa.sa_flags = SA_RESTART;
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
